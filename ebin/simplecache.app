@@ -1,0 +1,9 @@
+{application,simplecache,
+             [{description,[]},
+              {vsn,"1"},
+              {registered,[]},
+              {applications,[kernel,stdlib]},
+              {mod,{simplecache_app,[]}},
+              {env,[]},
+              {modules,[simple_cache,simplecache_app,simplecache_element,
+                        simplecache_store,simplecache_sup]}]}.
