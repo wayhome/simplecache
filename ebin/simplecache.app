@@ -7,4 +7,5 @@
               {env,[]},
               {modules,[simple_cache,simplecache_app,simplecache_element,
                         simplecache_element_sup,simplecache_event,
-                        simplecache_store,simplecache_sup]}]}.
+                        simplecache_event_logger,simplecache_store,
+                        simplecache_sup]}]}.

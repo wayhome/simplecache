@@ -15,8 +15,8 @@ insert(Key, Value) ->
 lookup(Key) ->
     try
         {ok, Pid} = simplecache_store:lookup(Key), 
-        {ok, Value} = simplecache_element:fetch(Pid),
         simplecache_event:lookup(Key),
+        {ok, Value} = simplecache_element:fetch(Pid),
         {ok, Value}
     catch
         _Class:_Exception ->

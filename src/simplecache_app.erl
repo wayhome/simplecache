@@ -13,6 +13,7 @@ start(_StartType, _StartArgs) ->
     simplecache_store:init(),
     case simplecache_sup:start_link() of
         {ok, Pid} ->
+            simplecache_event_logger:add_handler(),
             {ok, Pid};
         Other ->
             {error, Other}
