@@ -1,37 +1,26 @@
-
 -module(simplecache_sup).
 
 -behaviour(supervisor).
 
 %% API
--export([start_link/0,
-        start_child/2]).
+-export([start_link/0]).
 
-%% Supervisor callbacks
+%% Supervisor callbacks.
 -export([init/1]).
 
-%% Helper macro for declaring children of supervisor
--define(CHILD(I, Type), {I, {I, start_link, []}, permanent, 5000, Type, [I]}).
 -define(SERVER, ?MODULE).
-
-%% ===================================================================
-%% API functions
-%% ===================================================================
 
 start_link() ->
     supervisor:start_link({local, ?SERVER}, ?MODULE, []).
 
-start_child(Value, LeaseTime) ->
-    supervisor:start_child(?SERVER, [Value, LeaseTime]).
-
-%% ===================================================================
-%% Supervisor callbacks
-%% ===================================================================
-
 init([]) ->
-    Element = {simplecache_element, {simplecache_element, start_link, []},
-              temporary, brutal_kill, worker, [simplecache_element]},
-    Children = [Element],
-    RestartStrategy = {simple_one_for_one, 0, 1},
-    {ok, { RestartStrategy, Children }}.
+    ElementSup = {simplecache_element_sup, {simplecache_element_sup, start_link, []},
+                 permanent, 2000, supervisor, [simplecache_element]},
+
+    EventManager = {simplecache_event, {simplecache_event, start_link, []},
+                 permanent, 2000, worker, [simplecache_event]},
+
+    Children = [ElementSup, EventManager],
+    RestartStrategy = {one_for_one, 4, 3600},
+    {ok, {RestartStrategy, Children}}.
 

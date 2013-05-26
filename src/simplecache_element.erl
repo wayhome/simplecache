@@ -23,7 +23,7 @@ start_link(Value, LeaseTime) ->
     gen_server:start_link(?MODULE, [Value, LeaseTime], []).
 
 create(Value, LeaseTime) ->
-    simplecache_sup:start_child(Value, LeaseTime).
+    simplecache_element_sup:start_child(Value, LeaseTime).
 
 create(Value) ->
     create(Value, ?DEFAULT_LEASE_TIME).
